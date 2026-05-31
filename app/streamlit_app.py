@@ -296,12 +296,18 @@ def load_model():
 # st.write("Model:", model)
 # st.write("Error:", error)
 
+from pathlib import Path
+import sys
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 def try_import_predict():
     """Attempt to import the custom predict function from source/predict.py."""
     try:
-        from predict import predict_transaction
+        from source.predict import predict_transaction
         return predict_transaction, None
     except ImportError:
         return None, "source/predict.py not found — using built-in prediction fallback."
